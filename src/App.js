@@ -59,6 +59,7 @@ function EvalError(parseString, error) {
 }
 
 EvalError.prototype = Object.create(Error.prototype);
+// eslint-disable-next-line
 EvalError.prototype.constructor = EvalError;
 
 var evalf = function(string,value) {
