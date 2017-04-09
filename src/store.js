@@ -198,8 +198,8 @@ class AppStore {
       theta: "n",
       r: "100",
       // Rectangular
-      x: "x0+40*sin((freq(x0))/120+4.5)", 
-      y: "y0+40*sin((freq(y0))/120+4.5)", 
+      x: "x0+40*sin((freq(x0)+74)/30+4.5)", 
+      y: "y0+40*sin((freq(y0)+74)/30+4.5)", 
       center: ["200","200"],
       fill: true,
       width: "20",
@@ -264,7 +264,6 @@ class AppStore {
             const variables = component.get('variables') || List(),
               lastKey = component.get('lastKey') || -1,
               nextKey = lastKey + 1;
-
 
             return component.merge({
               "lastKey": nextKey,
