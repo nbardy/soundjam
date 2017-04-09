@@ -28,6 +28,8 @@ import mp3url from './downtheroad.mp3'; // Tell Webpack this JS file uses this i
 
 import './App.css';
 
+import './modernizr-custom.js'
+var Modernizr = window.Modernizr;
 
 injectTouchTapPlugin();
 
@@ -598,6 +600,46 @@ class Drawer extends Component {
   }
 }
 
+class WelcomeDialogue extends Component {
+  render() {
+    var actions = [];
+    var text = [];
+    text.push(
+      <div id="default-music-loader">
+        {this.props.loadingSong ? 
+            "Loading Default Song: " : "Song Loaded: "}
+            <span className="song">Tetra - Down the Road</span>
+        <Spinner spinnerName="triple-bounce" />
+      </div>
+    )
+
+    // Autoplay
+    if(!this.props.loadingSong) {
+      if(this.props.pushToPlay) {
+        actions.push(
+          <FlatButton 
+            label="Begin"
+            primary={true} 
+            onTouchTap={this.props.pushToPlay} />)
+      } else {
+        text.push(
+          <div> Music will start playing in: <span>{this.props.countdown}</span> </div>
+        )
+      }
+    }
+
+    return (
+      <Dialog
+        title="Welcome"
+        modal={true}
+        actions={actions}
+        open={this.props.open}>
+        {text}
+      </Dialog>
+    );
+  }
+}
+
 class Visualizer extends Component {
   constructor(props) {
     super(props);
@@ -608,7 +650,8 @@ class Visualizer extends Component {
       started: false,
       infoDialogue: false,
       loadingSong: true,
-      soundWarning: true,
+      pushToPlay: false,
+      welcomeDialogue: true,
       soundWarningCountdown: 5,
       errors: {}
     };
@@ -878,13 +921,20 @@ class Visualizer extends Component {
     audio.load();
 
     var closeAndRun = function() {
-      _this.setState({soundWarning: false})
+      _this.setState({welcomeDialogue: false})
       _this.run(audio);
     }
 
     audio.addEventListener('canplaythrough', function() {
       _this.setState({loadingSong: false})
-      setIntervalX(tickDown, 1000, 5, () => closeAndRun())
+
+      Modernizr.on('videoautoplay',function(result) {
+        if(result) {
+          setIntervalX(tickDown, 1000, 5, () => closeAndRun())
+        } else {
+          _this.setState({pushToPlay: closeAndRun})
+        }
+      })
     })
 
     audio.load()
@@ -892,18 +942,6 @@ class Visualizer extends Component {
 
   render() {
 
-    var welcomeText = [];
-    welcomeText.push(
-      <div id="default-music-loader">
-        Loading Default Music: <span className="song">Tetra - Down the Road</span>
-        <Spinner spinnerName="triple-bounce" />
-      </div>
-    )
-    if(!this.state.loadingSong) {
-      welcomeText.push(
-        <div> Music will start playing in: <span>{this.state.soundWarningCountdown}</span> </div>
-      )
-    }
 
     return (
       <div>
@@ -929,13 +967,12 @@ class Visualizer extends Component {
             disabled={!this.state.started} >
             <Stop />
           </IconButton>
-          <SimpleDialog
-            title="Welcome"
-            modal={true}
-            setOpen={(v) => this.setState({soundWarning: v})}
-            open={this.state.soundWarning}>
-            {welcomeText}
-          </SimpleDialog>
+          <WelcomeDialogue
+            loadingSong={this.state.loadingSong}
+            pushToPlay={this.state.pushToPlay}
+            countdown={this.state.soundWarningCountdown}
+            closeAction={(v) => this.setState({welcomeDialogue: false})}
+            open={this.state.welcomeDialogue} />
         </Paper>
         <FloatingActionButton
           mini={true}
