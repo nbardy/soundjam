@@ -479,6 +479,7 @@ class EditableComponent extends Component {
         </CardHeader>
         <CardText expandable={true}>
           <TextField
+            key="count"
             value={count}
             onChange={(e,v) => this.update('count',v)}
             floatingLabelFixed={true}
@@ -504,16 +505,19 @@ class EditableComponent extends Component {
             onToggle={(e,v) => this.update('fill',v)}>
           </Toggle>
           <TextField
+            key="red"
             value={color.get('r')}
             onChange={(e,v) => this.update('color',color.set('r',v))}
             floatingLabelFixed={true}
             floatingLabelText="Red" />
           <TextField
+            key="blue"
             value={color.get('g')}
             onChange={(e,v) => this.update('color',color.set('g',v))}
             floatingLabelFixed={true}
             floatingLabelText="Green" />
           <TextField
+            key="green"
             value={color.get('b')}
             onChange={(e,v) => this.update('color',color.set('b',v))}
             floatingLabelFixed={true}
