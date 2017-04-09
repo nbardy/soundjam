@@ -18,7 +18,6 @@ import Play from 'material-ui/svg-icons/av/play-arrow';
 import Pause from 'material-ui/svg-icons/av/pause';
 import Help from 'material-ui/svg-icons/action/help-outline';
 
-
 import {Parser} from 'expr-eval';
 import Spinner    from 'react-spinkit';
 
@@ -36,6 +35,10 @@ injectTouchTapPlugin();
 var SHAPES = ["circle","rectangle","polygon"];
 // Memoize
 var parsers = {};
+
+if(detectMobile()) {
+  alert("Warning: Mobile support dubios at best.")
+}
 
 function titleCase(string) { 
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -1001,5 +1004,21 @@ class Visualizer extends Component {
     );
   }
 } 
+
+function detectMobile() { 
+  if(navigator.userAgent.match(/Android/i)
+  || navigator.userAgent.match(/webOS/i)
+  || navigator.userAgent.match(/iPhone/i)
+  || navigator.userAgent.match(/iPad/i)
+  || navigator.userAgent.match(/iPod/i)
+  || navigator.userAgent.match(/BlackBerry/i)
+  || navigator.userAgent.match(/Windows Phone/i)
+  ){
+    return true;
+  }
+  else {
+    return false;
+  }
+}
 
 export default App;
