@@ -12,8 +12,7 @@ function updateById(list, id, update) {
 }
 
 class AppStore {
-  constructor()
-  {
+  constructor() {
     var old = JSON.parse(localStorage['current'] || '[]');
 
     if(old && old.length > 0) {

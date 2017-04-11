@@ -17,6 +17,7 @@ import Stop from 'material-ui/svg-icons/av/stop';
 import Play from 'material-ui/svg-icons/av/play-arrow';
 import Pause from 'material-ui/svg-icons/av/pause';
 import Help from 'material-ui/svg-icons/action/help-outline';
+import Clear from 'material-ui/svg-icons/content/clear';
 
 import {Parser} from 'expr-eval';
 import Spinner    from 'react-spinkit';
@@ -165,6 +166,7 @@ class App extends Component {
           <Visualizer 
             width={this.state.width} height={this.state.height}
             components={this.props.components} />
+          <Hint />
           <Drawer width={340} side="right" label="Components">
             <div id="components">
               {this.props.components.map((v,i) => 
@@ -1010,6 +1012,38 @@ class Visualizer extends Component {
     );
   }
 } 
+
+class Hint extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      seen: localStorage['seen']
+    }
+  }
+
+  close() {
+    this.setState({seen: true})
+    localStorage['seen'] = true;
+  }
+
+  render() {
+    return (
+      <div 
+        style={{display: this.state.seen ? "none" : "inline"}}
+        id="hint">
+        <Paper>
+          <div id="hint-content">
+            <IconButton 
+              id="hint-close-button" 
+              onClick={this.close.bind(this)}><Clear /></IconButton>
+            <div>Edit componets and watch them update</div>
+          </div>
+        </Paper>
+      </div>
+    );
+  }
+}
+
 
 function detectMobile() { 
   if(navigator.userAgent.match(/Android/i)

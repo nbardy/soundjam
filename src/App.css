@@ -104,3 +104,37 @@ body {
   flex-grow: 10;
   font-style: italic;
 }
+
+#hint {
+  position: fixed;
+  top: 300px;
+  right: 360px;
+}
+
+#hint-content {
+  width: 191px;
+  display: flex;
+  height: 40px;
+  vertical-align: middle;
+  line-height: 20px;
+  padding: 5px;
+}
+
+#hint::after {
+  position: absolute;
+  content: "";
+  border: 10px solid white;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: white;
+  right: -20px;
+  top: 20px;
+}
+
+#hint-close-button {
+  height: auto !important;
+  width: auto !important;
+  padding: 0 10px 0 5px !important;
+}
+
