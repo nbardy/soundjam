@@ -897,13 +897,18 @@ class Visualizer extends Component {
   }
 
   pauseAudio() {
-    this.state.audio.stop()
+    this.state.audio.pause()
   }
 
   pause() {
     this.setState({started: false, paused: true})
     this.pauseAudio()
   }
+
+  restart() {
+    this.stop()
+  }
+
 
   stop() {
     this.setState({
@@ -959,6 +964,7 @@ class Visualizer extends Component {
         <Paper className="song-selector">
           <span>Audio File:</span>
           <input name="audioFile" 
+            onChange={this.restart.bind(this)}
             ref={(i) => this.audio = i} type="file" />
           <IconButton 
             onClick={() => this.run.call(this)} 
