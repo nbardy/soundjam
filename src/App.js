@@ -1036,7 +1036,7 @@ class Hint extends Component {
             <IconButton 
               id="hint-close-button" 
               onClick={this.close.bind(this)}><Clear /></IconButton>
-            <div>Edit componets and watch them update</div>
+            <div>Edit components and watch them update</div>
           </div>
         </Paper>
       </div>
