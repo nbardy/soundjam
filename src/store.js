@@ -60,7 +60,12 @@ class AppStore {
     })
   }
 
-  psychodelicComponent() {
+  psychodelicComponent2() {
+    return {"shape":"circle","points":[],"fill":false,"color":{"r":"200 + 65*sin(freq(n)/3.7)","g":"12 + 122*sin(freq(n)/9.2)","b":"70 + 74*sin(freq(n)/9.5)"},"width":"0.7*freq(4*n,4)","active":true,"height":"0.7*freq(4*n,4)","name":"Spiral","count":"1000","r":"0.3*n + abs(freq(n*3))","radius":"n/10000 + abs(freq((n)*3))","center":["598.5",449.5],"x":"100+n*4","y":"200","id":0,"theta":"n + (t + freq(n)/72)/1987","polar":true,"rotation":"0.2*73329123%(n*734)+t/700"}
+  }
+
+  
+  ent() {
     var freqString = "freq(n)";
     return Immutable.fromJS({
       name: "Spiral",
@@ -217,6 +222,7 @@ class AppStore {
   startList() {
     return List([
       this.psychodelicComponent(),
+      this.psychodelicComponent2(),
       this.concentricComponent(false,["123","0","213"]),
       this.concentricComponent(true,["20","12","123"]),
       this.polarComponent(),
